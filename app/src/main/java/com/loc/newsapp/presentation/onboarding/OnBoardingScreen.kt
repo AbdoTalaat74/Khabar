@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -19,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.loc.newsapp.presentation.Dimens.MediumPadding2
 import com.loc.newsapp.presentation.Dimens.PageIndicatorWidth
 import com.loc.newsapp.presentation.common.NewsButton
@@ -30,7 +28,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen(modifier: Modifier = Modifier) {
+fun OnBoardingScreen(
+    modifier: Modifier = Modifier,
+    event: (OnBoardingEvent) -> Unit
+) {
     Column(modifier = modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
@@ -67,19 +68,19 @@ fun OnBoardingScreen(modifier: Modifier = Modifier) {
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 val coroutineScope = rememberCoroutineScope()
-                if (buttonState.value[0].isNotEmpty()){
-                    NewsTexButton(text =buttonState.value[0], onClick = {
-                         coroutineScope.launch {
-                             pagerState.animateScrollToPage(pagerState.currentPage - 1 )
-                         }
-                     } )
+                if (buttonState.value[0].isNotEmpty()) {
+                    NewsTexButton(text = buttonState.value[0], onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        }
+                    })
                 }
                 NewsButton(text = buttonState.value[1], onClick = {
                     coroutineScope.launch {
-                        if (pagerState.currentPage == 3){
-                            //TODO Navigate to main
-                        }else{
-                            pagerState.animateScrollToPage(pagerState.currentPage + 1 )
+                        if (pagerState.currentPage == 2) {
+                            event(OnBoardingEvent.SavaAppEntry)
+                        } else {
+                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
 
                         }
                     }
