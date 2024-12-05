@@ -27,7 +27,7 @@ import com.loc.newsapp.presentation.Dimens.AppIconWidth
 import com.loc.newsapp.presentation.Dimens.FontSize
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
 import com.loc.newsapp.presentation.Dimens.MediumPadding2
-import com.loc.newsapp.presentation.common.ArticleList
+import com.loc.newsapp.presentation.common.ArticlesList
 import com.loc.newsapp.presentation.common.SearchBar
 import com.loc.newsapp.presentation.navgraph.Route
 
@@ -91,7 +91,7 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(MediumPadding1))
 
-        ArticleList(
+        ArticlesList(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
             onClick = {

@@ -15,7 +15,7 @@ import com.loc.newsapp.presentation.Dimens.ExtraSmallPadding2
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
 
 @Composable
-fun ArticleList(
+fun ArticlesList(
     modifier: Modifier = Modifier,
     articles: LazyPagingItems<Article>,
     onClick:(Article) -> Unit
