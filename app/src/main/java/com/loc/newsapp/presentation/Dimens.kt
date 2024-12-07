@@ -16,4 +16,5 @@ object Dimens {
     val AppIconHeight = 30.dp
     val IconSize = 20.dp
     val FontSize = 12.sp
+    val ArticleImageHeight = 248.dp
 }
