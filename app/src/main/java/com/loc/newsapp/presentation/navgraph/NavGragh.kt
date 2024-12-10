@@ -6,10 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.loc.newsapp.presentation.bookmark.BookmarkScreen
+import com.loc.newsapp.presentation.bookmark.BookmarkViewModel
 import com.loc.newsapp.presentation.onboarding.OnBoardingScreen
 import com.loc.newsapp.presentation.onboarding.OnBoardingViewModel
-import com.loc.newsapp.presentation.search.SearchScreen
-import com.loc.newsapp.presentation.search.SearchViewModel
 
 @Composable
 fun NavGraph(
@@ -34,12 +34,8 @@ fun NavGraph(
             startDestination = Route.NewsNavigatorScreen.route
         ) {
             composable(route = Route.NewsNavigatorScreen.route) {
-                val viewModel: SearchViewModel = hiltViewModel()
-                SearchScreen(
-                    viewModel.state.value,
-                    event = viewModel::onEvent,
-                    navigateToDetails = {}
-                )
+                val viewModel: BookmarkViewModel = hiltViewModel()
+                BookmarkScreen(state = viewModel.state.value, navigate = {})
             }
 
         }

@@ -2,6 +2,7 @@ package com.loc.newsapp.di
 
 import android.app.Application
 import androidx.room.Room
+import com.loc.newsapp.data.local.NewsDao
 import com.loc.newsapp.data.local.NewsDatabase
 import com.loc.newsapp.data.local.NewsTypeConverter
 import com.loc.newsapp.data.manager.LocalUserManagerImpl
@@ -14,7 +15,10 @@ import com.loc.newsapp.domain.uscases.news.NewsUseCases
 import com.loc.newsapp.domain.uscases.app_entry.AppEntryUseCases
 import com.loc.newsapp.domain.uscases.app_entry.ReadAppEntry
 import com.loc.newsapp.domain.uscases.app_entry.SaveAppEntry
+import com.loc.newsapp.domain.uscases.news.DeleteArticle
 import com.loc.newsapp.domain.uscases.news.SearchNewsUseCase
+import com.loc.newsapp.domain.uscases.news.SelectArticles
+import com.loc.newsapp.domain.uscases.news.UpsertArticle
 import com.loc.newsapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -62,10 +66,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNewsUseCases(newsRepository: NewsRepository): NewsUseCases {
+    fun provideNewsUseCases(
+        newsRepository: NewsRepository,
+        newsDao: NewsDao
+    ): NewsUseCases {
         return NewsUseCases(
             getNews = GetNewsUseCase(newsRepository),
-            searchNews = SearchNewsUseCase(newsRepository)
+            searchNews = SearchNewsUseCase(newsRepository),
+            upsertArticle = UpsertArticle(newsDao = newsDao),
+            deleteArticle = DeleteArticle(newsDao = newsDao),
+            selectArticles = SelectArticles(newsDao = newsDao)
         )
     }
 
