@@ -17,6 +17,7 @@ import com.loc.newsapp.domain.uscases.app_entry.ReadAppEntry
 import com.loc.newsapp.domain.uscases.app_entry.SaveAppEntry
 import com.loc.newsapp.domain.uscases.news.DeleteArticle
 import com.loc.newsapp.domain.uscases.news.SearchNewsUseCase
+import com.loc.newsapp.domain.uscases.news.SelectArticle
 import com.loc.newsapp.domain.uscases.news.SelectArticles
 import com.loc.newsapp.domain.uscases.news.UpsertArticle
 import com.loc.newsapp.util.Constants.BASE_URL
@@ -58,26 +59,6 @@ object AppModule {
             .create(NewsApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideNewsRepository(
-        newsApi: NewsApi
-    ): NewsRepository = NewsRepositoryImpl(newsApi)
-
-    @Provides
-    @Singleton
-    fun provideNewsUseCases(
-        newsRepository: NewsRepository,
-        newsDao: NewsDao
-    ): NewsUseCases {
-        return NewsUseCases(
-            getNews = GetNewsUseCase(newsRepository),
-            searchNews = SearchNewsUseCase(newsRepository),
-            upsertArticle = UpsertArticle(newsDao = newsDao),
-            deleteArticle = DeleteArticle(newsDao = newsDao),
-            selectArticles = SelectArticles(newsDao = newsDao)
-        )
-    }
 
     @Provides
     @Singleton
@@ -96,6 +77,31 @@ object AppModule {
     fun provideNewsDao(
         newsDatabase: NewsDatabase
     ) = newsDatabase.newsDao
+
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(
+        newsApi: NewsApi,
+        newsDao: NewsDao
+    ): NewsRepository = NewsRepositoryImpl(newsApi,newsDao)
+
+    @Provides
+    @Singleton
+    fun provideNewsUseCases(
+        newsRepository: NewsRepository,
+    ): NewsUseCases {
+        return NewsUseCases(
+            getNews = GetNewsUseCase(newsRepository),
+            searchNews = SearchNewsUseCase(newsRepository),
+            upsertArticle = UpsertArticle(newsRepository = newsRepository),
+            deleteArticle = DeleteArticle(newsRepository = newsRepository),
+            selectArticles = SelectArticles(newsRepository = newsRepository),
+            selectArticle =  SelectArticle(newsRepository = newsRepository)
+        )
+    }
+
+
 }
 
 

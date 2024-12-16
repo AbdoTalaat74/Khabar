@@ -2,9 +2,8 @@ package com.loc.newsapp.domain.uscases.news
 
 import com.loc.newsapp.domain.repository.NewsRepository
 
-class SelectArticles(
+class SelectArticle(
     private val newsRepository: NewsRepository
 ) {
-    operator fun invoke() = newsRepository.getArticles()
-
+    suspend operator fun invoke(url: String) = newsRepository.getArticle(url)
 }

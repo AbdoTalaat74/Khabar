@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.loc.newsapp.domain.uscases.news.NewsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -23,7 +22,7 @@ class BookmarkViewModel @Inject constructor(
     }
 
     private fun getArticles() = newsUseCases.selectArticles().onEach {
-        _state.value = _state.value.copy(articles = it)
+        _state.value = _state.value.copy(articles = it.reversed())
 
     }.launchIn(viewModelScope)
 

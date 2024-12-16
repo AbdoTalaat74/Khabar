@@ -18,15 +18,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.loc.newsapp.R
 import com.loc.newsapp.domain.model.Article
-import com.loc.newsapp.domain.model.Source
 import com.loc.newsapp.presentation.Dimens.ArticleImageHeight
 import com.loc.newsapp.presentation.Dimens.MediumPadding1
-import com.loc.newsapp.ui.theme.NewsAppTheme
 
 @Composable
 fun DetailsScreen(
@@ -62,7 +59,7 @@ fun DetailsScreen(
                 }
             },
             onBookmarkClick = {
-                event(DetailsEvent.SaveArticle)
+                event(DetailsEvent.UpsertDeleteArticle(article))
             },
             onBackClick = navigateUp
         )
