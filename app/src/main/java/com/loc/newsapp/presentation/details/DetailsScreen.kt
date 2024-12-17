@@ -29,7 +29,8 @@ import com.loc.newsapp.presentation.Dimens.MediumPadding1
 fun DetailsScreen(
     article: Article,
     event: (DetailsEvent) -> Unit,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    isArticleSaved:Boolean
 ) {
 
     val context = LocalContext.current
@@ -41,6 +42,7 @@ fun DetailsScreen(
 
     ) {
         DetailsTopBar(
+            isArticleSaved = isArticleSaved,
             onBrowsingClick = {
                 Intent(Intent.ACTION_VIEW).also {
                     it.data = Uri.parse(article.url)

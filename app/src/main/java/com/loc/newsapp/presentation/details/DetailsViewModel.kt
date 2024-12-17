@@ -1,5 +1,6 @@
 package com.loc.newsapp.presentation.details
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -19,6 +20,9 @@ class DetailsViewModel @Inject constructor(
     var sideEffect by mutableStateOf<String?>(null)
         private set
 
+    private var _isArticleSaved = mutableStateOf(false)
+    var isArticleSaved:State<Boolean> = _isArticleSaved
+
     fun onEvent(event: DetailsEvent) {
         when (event) {
             is DetailsEvent.UpsertDeleteArticle -> {
@@ -35,6 +39,12 @@ class DetailsViewModel @Inject constructor(
             DetailsEvent.RemoveSideEffect -> {
                 sideEffect = null
             }
+        }
+    }
+
+    fun checkIsSaved(article: Article) {
+        viewModelScope.launch {
+            _isArticleSaved.value = newsUseCases.selectArticle(article.url) != null
         }
     }
 

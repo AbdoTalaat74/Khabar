@@ -153,10 +153,12 @@ fun NewsNavigator() {
                 }
                 navController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")
                     ?.let { article ->
+                        viewModel.checkIsSaved(article)
                         DetailsScreen(
                             article = article,
                             event = viewModel::onEvent,
-                            navigateUp = { navController.navigateUp() }
+                            navigateUp = { navController.navigateUp() },
+                            isArticleSaved = viewModel.isArticleSaved.value
                         )
                     }
 

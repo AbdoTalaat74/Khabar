@@ -32,7 +32,10 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 @Composable
-fun EmptyScreen(error: LoadState.Error? = null) {
+fun EmptyScreen(
+    error: LoadState.Error? = null,
+    isSearchError:Boolean = false
+) {
 
     var message by remember {
         mutableStateOf(parseErrorMessage(error = error))
@@ -43,8 +46,13 @@ fun EmptyScreen(error: LoadState.Error? = null) {
     }
 
     if (error == null){
-        message = "You have not saved news so far !"
-        icon = R.drawable.ic_search_document
+        if (isSearchError){
+            message = "No Articles found!"
+            icon = R.drawable.ic_search_document
+        }else{
+            message = "You have not saved news so far !"
+            icon = R.drawable.ic_search_document
+        }
     }
 
     var startAnimation by remember {
@@ -53,7 +61,7 @@ fun EmptyScreen(error: LoadState.Error? = null) {
 
     val alphaAnimation by animateFloatAsState(
         targetValue = if (startAnimation) 0.3f else 0f,
-        animationSpec = tween(durationMillis = 1000)
+        animationSpec = tween(durationMillis = 1500)
     )
 
     LaunchedEffect(key1 = true) {

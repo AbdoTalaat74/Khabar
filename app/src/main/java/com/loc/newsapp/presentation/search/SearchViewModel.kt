@@ -24,7 +24,9 @@ class SearchViewModel @Inject constructor(
             }
 
             is SearchEvent.SearchNews -> {
-                searchNews()
+                if (_state.value.searchQuery.isNotBlank()){
+                    searchNews()
+                }
             }
         }
     }
