@@ -8,10 +8,10 @@ import com.loc.newsapp.domain.model.Article
 class NewsPagingSource(
     private val newsApi: NewsApi,
     private val sources: String
-):PagingSource<Int,Article>() {
+) : PagingSource<Int, Article>() {
     private var totalNewsSize = 0
     override fun getRefreshKey(state: PagingState<Int, Article>): Int? {
-        return state.anchorPosition?.let {anchorPosition ->
+        return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
@@ -25,11 +25,11 @@ class NewsPagingSource(
             val articles = newsResponse.articles.distinctBy { it.title }
             LoadResult.Page(
                 data = articles,
-                nextKey = if (totalNewsSize == newsResponse.totalResults) null else page +1,
+                nextKey = if (totalNewsSize == newsResponse.totalResults) null else page + 1,
                 prevKey = null
             )
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             LoadResult.Error(
                 throwable = e
